@@ -1,0 +1,5 @@
+profile: grpc
+defaultPackage: actorgateway.micronaut
+---
+testFramework: junit
+sourceLanguage: java

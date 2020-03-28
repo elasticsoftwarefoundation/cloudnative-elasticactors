@@ -1,0 +1,33 @@
+apiVersion: skaffold/v2beta1
+kind: Config
+metadata:
+  name: actornode-micronaut
+build:
+  artifacts:
+  - image: actornode-micronaut
+    jib:
+      type: maven
+      args:
+        - -s
+        - "../../settings.xml"
+  tagPolicy:
+    gitCommit: {}
+deploy:
+  kubectl:
+    manifests:
+      - "src/main/k8s/*.yaml"
+      - "src/main/k8s/jvm/*.yaml"
+profiles:
+  - name: native
+    build:
+      artifacts:
+      - image: actornode-micronaut-native
+        custom:
+          buildCommand: "./build-native.sh"
+      tagPolicy:
+        gitCommit: {}
+    deploy:
+      kubectl:
+        manifests:
+          - "src/main/k8s/*.yaml"
+          - "src/main/k8s/native/*.yaml"

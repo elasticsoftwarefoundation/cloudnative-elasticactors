@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: org.elasticsoftware.elasticactors.actornode.micronaut
+---
+testFramework: junit
+sourceLanguage: java

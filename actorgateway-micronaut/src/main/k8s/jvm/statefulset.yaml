@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "actorgateway-micronaut"
+spec:
+  serviceName: "actorgateway-micronaut"
+  selector:
+    matchLabels:
+      app: "actorgateway-micronaut"
+  template:
+    metadata:
+      labels:
+        app: "actorgateway-micronaut"
+    spec:
+      serviceAccountName: "elasticactors-operator"
+      containers:
+        - name: "actorgateway-micronaut"
+          image: "actorgateway-micronaut"
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: grpc
+              containerPort: 50051
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+#          livenessProbe:
+#            httpGet:
+#              path: /health
+#              port: 8080
+#            initialDelaySeconds: 5
+#            timeoutSeconds: 3
+#            failureThreshold: 10

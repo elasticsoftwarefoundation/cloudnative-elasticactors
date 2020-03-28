@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: actornode-micronaut
+  config-client:
+    enabled: true

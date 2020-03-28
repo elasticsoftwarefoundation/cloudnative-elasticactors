@@ -1,0 +1,18 @@
+---
+micronaut:
+  application:
+    name: actorgateway-micronaut
+
+---
+micronaut:
+  metrics:
+    enabled: true
+    export:
+      prometheus:
+        enabled: true
+        step: PT1M
+        descriptions: true
+
+grpc:
+  client:
+    plaintext: true
