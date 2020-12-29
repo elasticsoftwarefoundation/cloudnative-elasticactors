@@ -21,6 +21,15 @@ spec:
               containerPort: 8080
             - name: grpc
               containerPort: 50051
+          env:
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: ACTORNODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           readinessProbe:
             httpGet:
               path: /health

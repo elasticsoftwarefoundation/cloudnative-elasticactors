@@ -2,11 +2,22 @@
 micronaut:
   application:
     name: actornode-micronaut
-
+  config-client:
+    enabled: true
+---
+kubernetes:
+  client:
+    config-maps:
+      enabled: false
+      labels:
+        - elasticactors.elasticsoftware.org/actorsystem: test-actorsytem
+    secrets:
+      enabled: true
+      labels:
+        - elasticactors.elasticsoftware.org/actorsystem: test-actorsystem
 ---
 #rabbitmq:
 #  uri: amqp://localhost:5672
-
 ---
 cassandra:
   default:
@@ -30,3 +41,21 @@ micronaut:
 kafka:
   bootstrap:
     servers: localhost:9092
+---
+grpc:
+  client:
+    plaintext: true
+  channels:
+    test-persistentactor:
+      address: "${host.ip}:50051"
+      plaintext: true
+---
+elasticactors:
+  name: "test-actorsystem"
+  nodes: 1
+  shards: 8
+  persistentactors:
+    test-persistentactor:
+      enabled: true
+      port: 50051
+

@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: persistentactor-micronaut
+  config-client:
+    enabled: true

@@ -1,0 +1,5 @@
+profile: grpc
+defaultPackage: org.elasticsoftware.persistentactor.micronaut
+---
+testFramework: junit
+sourceLanguage: java

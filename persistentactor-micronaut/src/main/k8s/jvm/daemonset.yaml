@@ -1,33 +1,27 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: DaemonSet
 metadata:
-  name: "actornode-micronaut"
+  name: "persistentactor-micronaut"
 spec:
-  serviceName: "actornode-micronaut"
   selector:
     matchLabels:
-      app: "actornode-micronaut"
+      app: "persistentactor-micronaut"
   template:
     metadata:
       labels:
-        app: "actornode-micronaut"
+        app: "persistentactor-micronaut"
     spec:
       serviceAccountName: "elasticactors-operator"
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
-        - name: "actornode-micronaut"
-          image: "actornode-micronaut-native"
+        - name: "persistentactor-micronaut"
+          image: "persistentactor-micronaut"
           ports:
             - name: http
               containerPort: 8080
             - name: grpc
               containerPort: 50051
-          env:
-            - name: HOST_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            - name: ACTORSYSTEM_NAME
-              value: "test-actorsystem"
           readinessProbe:
             httpGet:
               path: /health

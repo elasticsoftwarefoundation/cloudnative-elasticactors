@@ -4,18 +4,17 @@
     <artifactId>elasticactors-cloudnative-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <name>Elastic Software Foundation :: Cloud Native ElasticActors :: ActorNode Micronaut</name>
+  <name>Elastic Software Foundation :: Cloud Native ElasticActors :: PersistentActor Micronaut</name>
   <url>https://github.com/elasticsoftwarefoundation/cloudnative-elasticactors</url>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>actornode-micronaut</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <artifactId>persistentactor-micronaut</artifactId>
   <properties>
     <jdk.version>11</jdk.version>
     <maven.compiler.target>${jdk.version}</maven.compiler.target>
     <maven.compiler.source>${jdk.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <exec.mainClass>org.elasticsoftware.elasticactors.actornode.micronaut.Application</exec.mainClass>
+    <exec.mainClass>org.elasticsoftware.elasticactors.persistentactor.micronaut.Application</exec.mainClass>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
   </properties>
@@ -34,64 +33,17 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>org.elasticsoftware.elasticactors</groupId>
-        <artifactId>elasticactors-messaging</artifactId>
-        <version>2.5.9</version>
-        <exclusions>
-          <exclusion>
-            <groupId>com.google.guava</groupId>
-            <artifactId>*</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-netty</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>org.elasticsoftware.elasticactors</groupId>
-      <artifactId>elasticactors-messaging</artifactId>
+      <groupId>io.micronaut.grpc</groupId>
+      <artifactId>micronaut-grpc-runtime</artifactId>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-management</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut.kubernetes</groupId>
-      <artifactId>micronaut-kubernetes-discovery-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.annotation</groupId>
-      <artifactId>javax.annotation-api</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut.rabbitmq</groupId>
-      <artifactId>micronaut-rabbitmq</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <!--
-<dependency>
-  <groupId>io.micronaut.configuration</groupId>
-  <artifactId>micronaut-cassandra</artifactId>
-  <scope>compile</scope>
-</dependency>
- <dependency>
-  <groupId>io.micronaut.configuration</groupId>
-  <artifactId>micronaut-kafka</artifactId>
-  <scope>compile</scope>
-</dependency>
--->
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-client</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -119,18 +71,22 @@
       <artifactId>micronaut-micrometer-registry-prometheus</artifactId>
       <scope>compile</scope>
     </dependency>
+    <!--
+    <dependency>
+      <groupId>io.micronaut.kubernetes</groupId>
+      <artifactId>micronaut-kubernetes-discovery-client</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    -->
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server-netty</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>io.micronaut.grpc</groupId>
-      <artifactId>micronaut-grpc-runtime</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>grpc-netty</artifactId>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.graalvm.nativeimage</groupId>
@@ -161,35 +117,6 @@
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>com.github.os72</groupId>
-        <artifactId>protoc-jar-maven-plugin</artifactId>
-        <version>3.11.4</version>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <addProtoSources>all</addProtoSources>
-              <includeMavenTypes>direct</includeMavenTypes>
-              <inputDirectories>
-                <include>src/main/proto</include>
-              </inputDirectories>
-              <outputTargets>
-                <outputTarget>
-                  <type>java</type>
-                </outputTarget>
-                <outputTarget>
-                  <type>grpc-java</type>
-                  <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}</pluginArtifact>
-                </outputTarget>
-              </outputTargets>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -228,6 +155,35 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>com.github.os72</groupId>
+        <artifactId>protoc-jar-maven-plugin</artifactId>
+        <version>3.11.4</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <addProtoSources>all</addProtoSources>
+              <includeMavenTypes>direct</includeMavenTypes>
+              <inputDirectories>
+                <include>src/main/proto</include>
+              </inputDirectories>
+              <outputTargets>
+                <outputTarget>
+                  <type>java</type>
+                </outputTarget>
+                <outputTarget>
+                  <type>grpc-java</type>
+                  <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}</pluginArtifact>
+                </outputTarget>
+              </outputTargets>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>jib-maven-plugin</artifactId>
         <version>2.1.0</version>
@@ -236,7 +192,7 @@
             <image>fabric8/java-alpine-openjdk11-jre@sha256:c06b4213e55354fa8849f1e4698efbe62eb22ab6845b1a5f0f61215c98cd718c</image>
           </from>
           <to>
-            <image>actornode-micronaut</image>
+            <image>persistentactor-micronaut</image>
           </to>
         </configuration>
       </plugin>
@@ -270,7 +226,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>
+          <version>3.7.0</version>
           <configuration>
             <compilerArgs>
               <arg>-parameters</arg>
@@ -327,6 +283,4 @@
       </plugins>
     </pluginManagement>
   </build>
-  <profiles>
-  </profiles>
 </project>

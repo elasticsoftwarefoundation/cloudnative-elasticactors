@@ -1,15 +1,56 @@
 syntax = "proto3";
 
-package org.elasticsoftware.elasticactors.serialization.protobuf;
+package org.elasticsoftware.elasticactors.grpc;
 
-option optimize_for = SPEED;
+option java_multiple_files = true;
 
-// WARNING:
-//    you must not change the tag numbers of any existing fields.
-//    you must not add or delete any required fields.
-//    you may delete optional or repeated fields.
-//    you may add new optional or repeated fields but you must use fresh tag numbers (i.e. tag numbers that were never
-//        used in this protocol buffer, not even by deleted fields).
+// this service responds to gateway requests
+service NodeService {
+    // return the current state
+    rpc RequestState (StateRequest) returns (ActorState) {}
+}
+
+// The request message with the actor name.
+message StateRequest {
+    string actorName = 1;
+}
+
+// this is a client for the persistent/service actor
+service ActorLifecycleService {
+    // Sends a greeting
+    rpc HandleMessage (HandleMessageRequest) returns (ActorLifecycleResponse) {}
+}
+
+// The request message with the actor name.
+message HandleMessageRequest {
+    InternalMessage message = 1;
+    PersistentActorState state = 2;
+}
+
+message ActorLifecycleResponse {
+    repeated InternalMessage messages = 1;
+    ActorState state = 2;
+}
+
+message InternalMessage {
+    string receiver = 1;
+    string sender = 2;
+    string payloadType = 3;
+    bytes payload = 4;
+    bytes id = 5;
+    bool durable = 6;
+    bool undeliverable = 7;
+    repeated string receivers = 8;
+    uint32 timeout = 9;
+}
+
+// The current serialized actor state
+message ActorState {
+    bytes state = 1;
+    uint64 stateGeneration = 2;
+    string compressionMethod = 3;
+    string version = 4;
+}
 
 message ActorSystemEventListener {
     string actorId = 1;
@@ -17,10 +58,10 @@ message ActorSystemEventListener {
     bytes message = 3;
 }
 
-message PersistentActor {
+message PersistentActorState {
     string actorRef = 1;
-    string actorClass = 2;
-    string actorSystemVersion = 3;
+    string actorType = 2;
+    string actorTypeVersion = 3;
     bytes state = 4;
     string shardKey = 5;
     repeated Subscriber subscribers = 6;
@@ -38,4 +79,51 @@ message Subscription {
     string publisherRef = 1;
     string messageName = 2;
     bool cancelled = 3;
+}
+
+enum ActorType {
+    PERSISTENT = 0;
+    TEMP = 1;
+    SERVICE = 2;
+}
+
+message CreateActorMessage {
+    string actorId = 1;
+    bytes initialState = 2;
+    string actorClass = 3;
+    string actorSystem = 4;
+    ActorType type = 5;
+    string affinityKey = 6;
+}
+
+message DestroyActorMessage {
+    string actorRef = 1;
+}
+
+message ActivateActorMessage {
+    string actorSystem = 1;
+    string actorId = 2;
+    ActorType type = 3;
+}
+
+message WireMessage {
+    string queueName = 1;
+    bytes internalMessage = 2;
+}
+
+message CancelScheduledMessageMessage {
+    bytes messageId = 1;
+    uint64 fireTime = 2;
+}
+
+message ActorNodeMessage {
+    string receiver = 1;
+    string nodeId = 2;
+    string payloadClass = 3;
+    bytes payload = 4;
+    bool undeliverable = 5;
+}
+
+message PersistActorMessage {
+    string actorRef = 1;
 }

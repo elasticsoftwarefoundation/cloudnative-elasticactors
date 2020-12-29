@@ -1,4 +1,4 @@
-package org.elasticsoftware.elasticactors.actornode.micronaut;
+package org.elasticsoftware.elasticactors.persistentactor.micronaut;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -16,7 +16,6 @@ public class Application {
 
     @Singleton
     static class ObjectMapperBeanEventListener implements BeanCreatedEventListener<ObjectMapper> {
-
         @Override
         public ObjectMapper onCreated(BeanCreatedEvent<ObjectMapper> event) {
             final ObjectMapper mapper = event.getBean();

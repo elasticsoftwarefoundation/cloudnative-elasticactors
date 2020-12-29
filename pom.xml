@@ -10,13 +10,15 @@
     <modules>
         <module>actornode-micronaut</module>
         <module>actorgateway-micronaut</module>
+        <module>persistentactor-micronaut</module>
     </modules>
     <packaging>pom</packaging>
     <name>Elastic Software Foundation :: Cloud Native ElasticActors</name>
     <url>https://github.com/elasticsoftwarefoundation/cloudnative-elasticactors</url>
     <properties>
-        <micronaut.version>1.3.3</micronaut.version>
-        <grpc.version>1.26.0</grpc.version>
+        <micronaut.version>2.2.1</micronaut.version>
+        <grpc.version>1.33.1</grpc.version>
+        <logback.version>1.2.3</logback.version>
     </properties>
     <repositories>
         <repository>

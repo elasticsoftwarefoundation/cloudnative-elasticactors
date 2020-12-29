@@ -1,10 +1,10 @@
 apiVersion: skaffold/v2beta1
 kind: Config
 metadata:
-  name: actornode-micronaut
+  name: persistentactor-micronaut
 build:
   artifacts:
-  - image: actornode-micronaut
+  - image: persistentactor-micronaut
     jib:
       type: maven
       args:
@@ -17,14 +17,11 @@ deploy:
     manifests:
       - "src/main/k8s/*.yaml"
       - "src/main/k8s/jvm/*.yaml"
-    flags:
-      global:
-        - -n elasticactors
 profiles:
   - name: native
     build:
       artifacts:
-      - image: actornode-micronaut-native
+      - image: persistentactor-micronaut-native
         custom:
           buildCommand: "./build-native.sh"
       tagPolicy:

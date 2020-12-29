@@ -1,7 +1,7 @@
 ---
 micronaut:
   application:
-    name: actorgateway-micronaut
+    name: persistentactor-micronaut
 
 ---
 micronaut:
@@ -12,7 +12,7 @@ micronaut:
         enabled: true
         step: PT1M
         descriptions: true
----
+
 grpc:
   client:
     plaintext: true
