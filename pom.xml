@@ -3,8 +3,7 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>org.elasticsoftware.elasticactors.cloudnative</groupId>
+    <groupId>org.elasticsoftwarefoundation.elasticactors.cloudnative</groupId>
     <artifactId>elasticactors-cloudnative-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <modules>
@@ -16,15 +15,31 @@
     <name>Elastic Software Foundation :: Cloud Native ElasticActors</name>
     <url>https://github.com/elasticsoftwarefoundation/cloudnative-elasticactors</url>
     <properties>
-        <micronaut.version>2.2.1</micronaut.version>
-        <grpc.version>1.33.1</grpc.version>
+        <micronaut.version>2.5.3</micronaut.version>
+        <grpc.version>1.37.1</grpc.version>
         <logback.version>1.2.3</logback.version>
     </properties>
-    <repositories>
-        <repository>
-            <id>micronaut-bintray</id>
-            <url>https://dl.bintray.com/micronaut/core-releases-local/</url>
-        </repository>
-    </repositories>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

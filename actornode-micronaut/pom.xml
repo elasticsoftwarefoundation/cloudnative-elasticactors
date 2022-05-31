@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <groupId>org.elasticsoftware.elasticactors.cloudnative</groupId>
+    <groupId>org.elasticsoftwarefoundation.elasticactors.cloudnative</groupId>
     <artifactId>elasticactors-cloudnative-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
@@ -19,12 +19,6 @@
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
   </properties>
-  <repositories>
-    <repository>
-      <id>jcenter.bintray.com</id>
-      <url>https://jcenter.bintray.com</url>
-    </repository>
-  </repositories>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -35,9 +29,9 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.elasticsoftware.elasticactors</groupId>
+        <groupId>org.elasticsoftwarefoundation.elasticactors</groupId>
         <artifactId>elasticactors-messaging</artifactId>
-        <version>2.5.9</version>
+        <version>3.1.0</version>
         <exclusions>
           <exclusion>
             <groupId>com.google.guava</groupId>
@@ -54,7 +48,7 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>org.elasticsoftware.elasticactors</groupId>
+      <groupId>org.elasticsoftwarefoundation.elasticactors</groupId>
       <artifactId>elasticactors-messaging</artifactId>
     </dependency>
     <dependency>
@@ -230,7 +224,7 @@
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>jib-maven-plugin</artifactId>
-        <version>2.1.0</version>
+        <version>3.0.0</version>
         <configuration>
           <from>
             <image>fabric8/java-alpine-openjdk11-jre@sha256:c06b4213e55354fa8849f1e4698efbe62eb22ab6845b1a5f0f61215c98cd718c</image>

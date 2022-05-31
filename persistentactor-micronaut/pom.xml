@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <groupId>org.elasticsoftware.elasticactors.cloudnative</groupId>
+    <groupId>org.elasticsoftwarefoundation.elasticactors.cloudnative</groupId>
     <artifactId>elasticactors-cloudnative-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
@@ -18,12 +18,6 @@
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
   </properties>
-  <repositories>
-    <repository>
-      <id>jcenter.bintray.com</id>
-      <url>https://jcenter.bintray.com</url>
-    </repository>
-  </repositories>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -173,10 +167,14 @@
               <outputTargets>
                 <outputTarget>
                   <type>java</type>
+                  <addSources>none</addSources>
+                  <outputDirectory>src/main/java</outputDirectory>
                 </outputTarget>
                 <outputTarget>
                   <type>grpc-java</type>
                   <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}</pluginArtifact>
+                  <addSources>none</addSources>
+                  <outputDirectory>src/main/java</outputDirectory>
                 </outputTarget>
               </outputTargets>
             </configuration>
