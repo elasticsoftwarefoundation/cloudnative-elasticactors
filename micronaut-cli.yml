@@ -1,0 +1,6 @@
+applicationType: grpc
+defaultPackage: org.elasticsoftware.elasticactors.cloudnative
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [annotation-api, app-name, config-kubernetes, github-workflow-graal-docker-registry, graalvm, grpc, jackson-databind, java, java-application, jib, junit, kafka, kubernetes, kubernetes-client, logback, management, maven, mockito, readme, shade, yaml]

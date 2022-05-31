@@ -1,0 +1,8 @@
+kafka:
+  enabled: false
+kubernetes:
+  client:
+    config-maps:
+      enabled: false
+    discovery:
+      enabled: false
