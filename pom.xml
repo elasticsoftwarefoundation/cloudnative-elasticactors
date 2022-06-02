@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.elasticsoftware.elasticactors.cloudnative</groupId>
   <artifactId>cloudnative-elasticactors</artifactId>
-  <version>0.1</version>
+  <version>0.1.0</version>
   <packaging>${packaging}</packaging>
 
   <parent>
@@ -155,6 +155,7 @@
       <id>operator</id>
       <properties>
         <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.ElasticActorsOperatorApplication</exec.mainClass>
+        <jib.docker.image>elasticactors-operator</jib.docker.image>
       </properties>
       <build>
         <plugins>
@@ -176,6 +177,7 @@
       <id>actorsystemshard</id>
       <properties>
         <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.ActorSystemShardApplication</exec.mainClass>
+        <jib.docker.image>actorsystemshard</jib.docker.image>
       </properties>
       <build>
         <plugins>
@@ -197,6 +199,7 @@
       <id>persistentactor</id>
       <properties>
         <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.PersistentActorApplication</exec.mainClass>
+        <jib.docker.image>persistentactor</jib.docker.image>
       </properties>
       <build>
         <plugins>
