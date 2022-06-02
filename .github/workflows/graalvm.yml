@@ -25,12 +25,9 @@ jobs:
           registry: ${{ secrets.DOCKER_REGISTRY_URL }}
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build And Push Docker Image
+      - name: Build Native Operator Docker Image
         env:
-          DOCKER_REPOSITORY_PATH: elasticactors
-          DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_URL }}
           TESTCONTAINERS_RYUK_DISABLED: true
         run: |
-          export DOCKER_IMAGE=elasticactors/cloudnative-elasticactors
-          echo $DOCKER_IMAGE
-          ./mvnw deploy -Dpackaging=docker-native -Djib.docker.image=$DOCKER_IMAGE --no-transfer-progress
+          export DOCKER_IMAGE=elasticactors/operator
+          ./mvnw deploy -Poperator -Dpackaging=docker -Djib.docker.image=$DOCKER_IMAGE --no-transfer-progress
