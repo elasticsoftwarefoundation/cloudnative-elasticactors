@@ -146,6 +146,9 @@
           <to>
             <image>${jib.docker.image}:${jib.docker.tag}</image>
           </to>
+          <container>
+            <mainClass>${exec.mainClass}</mainClass>
+          </container>
         </configuration>
       </plugin>
     </plugins>
