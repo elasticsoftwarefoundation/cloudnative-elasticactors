@@ -6,3 +6,5 @@ kubernetes:
       enabled: false
     discovery:
       enabled: false
+    informer:
+      resync-period: 10000

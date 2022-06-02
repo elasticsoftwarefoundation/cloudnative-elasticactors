@@ -154,7 +154,7 @@
     <profile>
       <id>operator</id>
       <properties>
-        <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.ActorSystemOperatorApplication</exec.mainClass>
+        <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.ElasticActorsOperatorApplication</exec.mainClass>
       </properties>
       <build>
         <plugins>
@@ -163,7 +163,7 @@
             <artifactId>native-maven-plugin</artifactId>
             <configuration combine.self="override">
               <imageName>elasticactors-operator</imageName>
-              <mainClass>org.elasticsoftware.elasticactors.cloudnative.ActorSystemOperatorApplication</mainClass>
+              <mainClass>org.elasticsoftware.elasticactors.cloudnative.ElasticActorsOperatorApplication</mainClass>
               <buildArgs>
                 <buildArg>--no-fallback</buildArg>
               </buildArgs>

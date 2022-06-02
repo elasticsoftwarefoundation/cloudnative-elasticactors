@@ -20,18 +20,120 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.elasticsoftware.elasticactors.cloudnative.operator.models.V1ActorSystemSpecActorGateway;
+import org.elasticsoftware.elasticactors.cloudnative.operator.models.V1ActorSystemSpecPersistentActors;
 
 /**
  * V1ActorSystemSpec
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-31T10:50:42.749Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-01T21:12:02.215Z[Etc/UTC]")
 public class V1ActorSystemSpec {
+  public static final String SERIALIZED_NAME_ACTOR_GATEWAY = "actorGateway";
+  @SerializedName(SERIALIZED_NAME_ACTOR_GATEWAY)
+  private V1ActorSystemSpecActorGateway actorGateway;
+
+  public static final String SERIALIZED_NAME_PERSISTENT_ACTORS = "persistentActors";
+  @SerializedName(SERIALIZED_NAME_PERSISTENT_ACTORS)
+  private List<V1ActorSystemSpecPersistentActors> persistentActors = null;
+
+  public static final String SERIALIZED_NAME_SERVICE_ACTORS = "serviceActors";
+  @SerializedName(SERIALIZED_NAME_SERVICE_ACTORS)
+  private List<V1ActorSystemSpecPersistentActors> serviceActors = null;
+
   public static final String SERIALIZED_NAME_SHARDS = "shards";
   @SerializedName(SERIALIZED_NAME_SHARDS)
   private Integer shards;
+
+
+  public V1ActorSystemSpec actorGateway(V1ActorSystemSpecActorGateway actorGateway) {
+    
+    this.actorGateway = actorGateway;
+    return this;
+  }
+
+   /**
+   * Get actorGateway
+   * @return actorGateway
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public V1ActorSystemSpecActorGateway getActorGateway() {
+    return actorGateway;
+  }
+
+
+  public void setActorGateway(V1ActorSystemSpecActorGateway actorGateway) {
+    this.actorGateway = actorGateway;
+  }
+
+
+  public V1ActorSystemSpec persistentActors(List<V1ActorSystemSpecPersistentActors> persistentActors) {
+    
+    this.persistentActors = persistentActors;
+    return this;
+  }
+
+  public V1ActorSystemSpec addPersistentActorsItem(V1ActorSystemSpecPersistentActors persistentActorsItem) {
+    if (this.persistentActors == null) {
+      this.persistentActors = new ArrayList<>();
+    }
+    this.persistentActors.add(persistentActorsItem);
+    return this;
+  }
+
+   /**
+   * Get persistentActors
+   * @return persistentActors
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<V1ActorSystemSpecPersistentActors> getPersistentActors() {
+    return persistentActors;
+  }
+
+
+  public void setPersistentActors(List<V1ActorSystemSpecPersistentActors> persistentActors) {
+    this.persistentActors = persistentActors;
+  }
+
+
+  public V1ActorSystemSpec serviceActors(List<V1ActorSystemSpecPersistentActors> serviceActors) {
+    
+    this.serviceActors = serviceActors;
+    return this;
+  }
+
+  public V1ActorSystemSpec addServiceActorsItem(V1ActorSystemSpecPersistentActors serviceActorsItem) {
+    if (this.serviceActors == null) {
+      this.serviceActors = new ArrayList<>();
+    }
+    this.serviceActors.add(serviceActorsItem);
+    return this;
+  }
+
+   /**
+   * Get serviceActors
+   * @return serviceActors
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<V1ActorSystemSpecPersistentActors> getServiceActors() {
+    return serviceActors;
+  }
+
+
+  public void setServiceActors(List<V1ActorSystemSpecPersistentActors> serviceActors) {
+    this.serviceActors = serviceActors;
+  }
 
 
   public V1ActorSystemSpec shards(Integer shards) {
@@ -66,12 +168,15 @@ public class V1ActorSystemSpec {
       return false;
     }
     V1ActorSystemSpec v1ActorSystemSpec = (V1ActorSystemSpec) o;
-    return Objects.equals(this.shards, v1ActorSystemSpec.shards);
+    return Objects.equals(this.actorGateway, v1ActorSystemSpec.actorGateway) &&
+        Objects.equals(this.persistentActors, v1ActorSystemSpec.persistentActors) &&
+        Objects.equals(this.serviceActors, v1ActorSystemSpec.serviceActors) &&
+        Objects.equals(this.shards, v1ActorSystemSpec.shards);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(shards);
+    return Objects.hash(actorGateway, persistentActors, serviceActors, shards);
   }
 
 
@@ -79,6 +184,9 @@ public class V1ActorSystemSpec {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1ActorSystemSpec {\n");
+    sb.append("    actorGateway: ").append(toIndentedString(actorGateway)).append("\n");
+    sb.append("    persistentActors: ").append(toIndentedString(persistentActors)).append("\n");
+    sb.append("    serviceActors: ").append(toIndentedString(serviceActors)).append("\n");
     sb.append("    shards: ").append(toIndentedString(shards)).append("\n");
     sb.append("}");
     return sb.toString();

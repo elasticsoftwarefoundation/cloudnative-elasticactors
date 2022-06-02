@@ -1,0 +1,13 @@
+apiVersion: elasticactors.io/v1
+kind: ActorSystem
+metadata:
+  name: test-actorsystem
+  namespace: default
+spec:
+  shards: 8
+  persistentActors:
+    - name: TestActor
+  serviceActors:
+    - name: TestServiceActor
+  actorGateway:
+    type: Micronaut
