@@ -1,12 +1,13 @@
-name: GraalVM CE CI
-on: [push, pull_request]
+name: Release Docker Image
+on:
+  push:
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          repository: elasticsoftwarefoundation/cloudnative-elasticactors
       - uses: actions/cache@v2
         with:
           path: |
@@ -24,9 +25,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
-      - name: Build Native Operator Docker Image
+      - name: Build Operator Docker Image
         env:
           TESTCONTAINERS_RYUK_DISABLED: true
         run: |
-          export DOCKER_IMAGE=elasticactors/operator
-          ./mvnw deploy -Poperator -Dpackaging=docker-native -Djib.docker.image=$DOCKER_IMAGE --no-transfer-progress
+          BASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
+          ./mvnw deploy -Poperator -Dpackaging=docker -Djib.to.tags=${BASE_VERSION}.${{ github.run_number }},${BASE_VERSION} --no-transfer-progress

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.elasticsoftware.elasticactors.cloudnative</groupId>
   <artifactId>cloudnative-elasticactors</artifactId>
-  <version>0.1.2</version>
+  <version>0.1</version>
   <packaging>${packaging}</packaging>
 
   <parent>
@@ -20,7 +20,7 @@
     <micronaut.version>3.5.0</micronaut.version>
     <jib.docker.image>${project.artifactId}</jib.docker.image>
     <jib.docker.tag>${project.version}</jib.docker.tag>
-    <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.ActorSystemShardApplication</exec.mainClass>
+    <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.CloudNativeElasticActorsApplication</exec.mainClass>
   </properties>
 
   <repositories>
@@ -131,7 +131,7 @@
           </annotationProcessorPaths>
           <compilerArgs>
             <arg>-Amicronaut.processing.group=org.elasticsoftware.elasticactors.cloudnative</arg>
-            <arg>-Amicronaut.processing.module=actorsystemshard</arg>
+            <arg>-Amicronaut.processing.module=cloudnative-elasticactors</arg>
           </compilerArgs>
         </configuration>
       </plugin>
@@ -144,7 +144,7 @@
         <artifactId>jib-maven-plugin</artifactId>
         <configuration>
           <to>
-            <image>${jib.docker.image}:${jib.docker.tag}</image>
+            <image>elasticactors/cloudnative-elasticactors</image>
           </to>
           <container>
             <mainClass>${exec.mainClass}</mainClass>
@@ -153,73 +153,4 @@
       </plugin>
     </plugins>
   </build>
-  <profiles>
-    <profile>
-      <id>operator</id>
-      <properties>
-        <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.ElasticActorsOperatorApplication</exec.mainClass>
-        <jib.docker.image>elasticactors-operator</jib.docker.image>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.graalvm.buildtools</groupId>
-            <artifactId>native-maven-plugin</artifactId>
-            <configuration combine.self="override">
-              <imageName>elasticactors-operator</imageName>
-              <mainClass>org.elasticsoftware.elasticactors.cloudnative.ElasticActorsOperatorApplication</mainClass>
-              <buildArgs>
-                <buildArg>--no-fallback</buildArg>
-              </buildArgs>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>actorsystemshard</id>
-      <properties>
-        <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.ActorSystemShardApplication</exec.mainClass>
-        <jib.docker.image>actorsystemshard</jib.docker.image>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.graalvm.buildtools</groupId>
-            <artifactId>native-maven-plugin</artifactId>
-            <configuration combine.self="override">
-              <imageName>actorsystemshard</imageName>
-              <mainClass>org.elasticsoftware.elasticactors.cloudnative.ActorSystemShardApplication</mainClass>
-              <buildArgs>
-                <buildArg>--no-fallback</buildArg>
-              </buildArgs>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>persistentactor</id>
-      <properties>
-        <exec.mainClass>org.elasticsoftware.elasticactors.cloudnative.PersistentActorApplication</exec.mainClass>
-        <jib.docker.image>persistentactor</jib.docker.image>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.graalvm.buildtools</groupId>
-            <artifactId>native-maven-plugin</artifactId>
-            <configuration combine.self="override">
-              <imageName>persistentactor</imageName>
-              <mainClass>org.elasticsoftware.elasticactors.cloudnative.PersistentActorApplication</mainClass>
-              <buildArgs>
-                <buildArg>--no-fallback</buildArg>
-              </buildArgs>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
 </project>
