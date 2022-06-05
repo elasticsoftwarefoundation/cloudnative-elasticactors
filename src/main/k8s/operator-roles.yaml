@@ -1,24 +1,3 @@
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: service-discoverer
-rules:
-  - apiGroups: [""]
-    resources: ["services", "endpoints", "configmaps", "secrets", "pods"]
-    verbs: ["get", "watch", "list"]
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: default-service-discoverer
-subjects:
-  - kind: ServiceAccount
-    name: default
-roleRef:
-  kind: Role
-  name: service-discoverer
-  apiGroup: rbac.authorization.k8s.io
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -54,10 +33,12 @@ rules:
       - ""
     resources:
       - services
-      - services/finalizers
+      - serviceaccounts
       - endpoints
     verbs:
       - get
+      - watch
+      - list
       - create
       - update
       - delete

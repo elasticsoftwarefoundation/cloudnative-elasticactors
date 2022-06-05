@@ -11,6 +11,7 @@ package org.elasticsoftware.elasticactors.cloudnative;
 service PersistentActorService {
   // handle incoming message
   rpc handleMessage (HandleMessageRequest) returns (HandleMessageResponse) {}
+  rpc echo (EchoRequest) returns (EchoResponse) {}
 }
 
 // The request message with the actor name.
@@ -41,4 +42,13 @@ message ActorState {
   bytes state = 1;
   uint64 stateGeneration = 2;
   string compressionMethod = 3;
+}
+
+message EchoRequest {
+  string message = 1;
+}
+
+message EchoResponse {
+  string message = 1;
+  string from = 2;
 }

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Requires(env = "operator")
-@Informer(apiType = V1StatefulSet.class, apiListType = V1StatefulSetList.class, labelSelector = "io.elasticactors.actorsystem", resyncCheckPeriod = 10000L)
+@Informer(apiType = V1StatefulSet.class, apiListType = V1StatefulSetList.class, labelSelector = "io.elasticactors.actorsystem/name", resyncCheckPeriod = 10000L)
 public class StatefulsetResourceEventHandler implements ResourceEventHandler<V1StatefulSet> {
     private static final Logger log = LoggerFactory.getLogger(StatefulsetResourceEventHandler.class);
 
