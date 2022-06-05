@@ -23,5 +23,9 @@ import io.micronaut.core.annotation.TypeHint;
         type = V1ActorSystemSpecPersistentActors.class,
         accessType = {TypeHint.AccessType.ALL_PUBLIC_METHODS, TypeHint.AccessType.ALL_DECLARED_CONSTRUCTORS, TypeHint.AccessType.ALL_DECLARED_FIELDS}
 )
+@ReflectionConfig(
+        type = V1ActorSystemSpecRuntime.class,
+        accessType = {TypeHint.AccessType.ALL_PUBLIC_METHODS, TypeHint.AccessType.ALL_DECLARED_CONSTRUCTORS, TypeHint.AccessType.ALL_DECLARED_FIELDS}
+)
 public class ActorSystemModels {
 }

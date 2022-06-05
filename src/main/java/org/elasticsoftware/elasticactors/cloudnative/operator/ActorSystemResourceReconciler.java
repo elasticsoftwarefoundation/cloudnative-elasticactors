@@ -28,14 +28,18 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
     private final SharedIndexInformerFactory sharedIndexInformerFactory;
     private final CoreV1Api coreApi;
     private final AppsV1Api appsApi;
+    private final KafkaBootstrapServiceDetector kafkaBootstrapServiceDetector;
     private static final Logger log = LoggerFactory.getLogger(ActorSystemResourceReconciler.class);
+
 
     public ActorSystemResourceReconciler(@NonNull SharedIndexInformerFactory sharedIndexInformerFactory,
                                          @NonNull CoreV1Api coreApi,
-                                         @NonNull AppsV1Api appsApi) {
+                                         @NonNull AppsV1Api appsApi,
+                                         @NonNull KafkaBootstrapServiceDetector kafkaBootstrapServiceDetector) {
         this.sharedIndexInformerFactory = sharedIndexInformerFactory;
         this.coreApi = coreApi;
         this.appsApi = appsApi;
+        this.kafkaBootstrapServiceDetector = kafkaBootstrapServiceDetector;
     }
 
     @NonNull
@@ -53,7 +57,7 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
             V1Service service =
                     new V1ServiceBuilder()
                             .withNewMetadata()
-                            .withName(actorSystem.getMetadata().getName() + "-headless")
+                            .withName(actorSystem.getMetadata().getName() + "-shards")
                             .addNewOwnerReference()
                             .withName(actorSystem.getMetadata().getName())
                             .withUid(actorSystem.getMetadata().getUid())
@@ -81,7 +85,7 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
                             .endMetadata()
                             .withNewSpec()
                             .withNewSelector().addToMatchLabels("app", actorSystem.getMetadata().getName()).endSelector()
-                            .withServiceName(actorSystem.getMetadata().getName() + "-headless")
+                            .withServiceName(actorSystem.getMetadata().getName() + "-shards")
                             .withReplicas(actorSystem.getSpec().getShards())
                             .withPodManagementPolicy("Parallel")
                             .withNewTemplate()
@@ -92,10 +96,10 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
                             .withContainers()
                             .addNewContainer()
                             .withName("actorsystemshard")
-                            .withImage("elasticactors/cloudnative-elasticactors:0.1")
+                            .withImage(Optional.ofNullable(actorSystem.getSpec().getRuntime().getImage()).orElse("elasticactors/cloudnative-elasticactors")+":"+actorSystem.getSpec().getRuntime().getVersion())
                             .addNewArg("actorsystemshard")
-                            .addNewArg("-Dkafka.enabled=true")
-                            .addNewArg("-Dkafka.bootstrap.servers=akces-kafka-bootstrap.strimzi:9092")
+                            .addNewArg("-Dkafka.enabled="+kafkaBootstrapServiceDetector.isEnabled())
+                            .addNewArg("-Dkafka.bootstrap.servers="+kafkaBootstrapServiceDetector.getBootstrapUrl())
                             .withNewResources()
                             .addToRequests("cpu", Quantity.fromString("100m"))
                             .addToRequests("memory",Quantity.fromString("512Mi"))

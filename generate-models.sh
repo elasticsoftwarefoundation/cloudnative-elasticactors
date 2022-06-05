@@ -1,4 +1,4 @@
-LOCAL_MANIFEST_FILE=$(pwd)/src/main/crds/crds.yaml
+LOCAL_MANIFEST_FILE=$(pwd)/src/main/crds/ActorSystem.yaml
 docker run \
   --rm \
   -v "$LOCAL_MANIFEST_FILE":"$LOCAL_MANIFEST_FILE" \

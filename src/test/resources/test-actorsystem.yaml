@@ -5,6 +5,8 @@ metadata:
   namespace: default
 spec:
   shards: 1
+  runtime:
+    version: 0.1.15
   persistentActors:
     - name: TestActor
   serviceActors:

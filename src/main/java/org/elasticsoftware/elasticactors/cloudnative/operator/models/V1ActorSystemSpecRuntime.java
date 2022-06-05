@@ -25,35 +25,61 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * V1ActorSystemSpecPersistentActors
+ * V1ActorSystemSpecRuntime
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-05T13:31:51.618Z[Etc/UTC]")
-public class V1ActorSystemSpecPersistentActors {
-  public static final String SERIALIZED_NAME_NAME = "name";
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
+public class V1ActorSystemSpecRuntime {
+  public static final String SERIALIZED_NAME_IMAGE = "image";
+  @SerializedName(SERIALIZED_NAME_IMAGE)
+  private String image;
+
+  public static final String SERIALIZED_NAME_VERSION = "version";
+  @SerializedName(SERIALIZED_NAME_VERSION)
+  private String version;
 
 
-  public V1ActorSystemSpecPersistentActors name(String name) {
+  public V1ActorSystemSpecRuntime image(String image) {
     
-    this.name = name;
+    this.image = image;
     return this;
   }
 
    /**
-   * Get name
-   * @return name
+   * Get image
+   * @return image
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public String getName() {
-    return name;
+  public String getImage() {
+    return image;
   }
 
 
-  public void setName(String name) {
-    this.name = name;
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+
+  public V1ActorSystemSpecRuntime version(String version) {
+    
+    this.version = version;
+    return this;
+  }
+
+   /**
+   * Get version
+   * @return version
+  **/
+  @ApiModelProperty(required = true, value = "")
+
+  public String getVersion() {
+    return version;
+  }
+
+
+  public void setVersion(String version) {
+    this.version = version;
   }
 
 
@@ -65,21 +91,23 @@ public class V1ActorSystemSpecPersistentActors {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1ActorSystemSpecPersistentActors v1ActorSystemSpecPersistentActors = (V1ActorSystemSpecPersistentActors) o;
-    return Objects.equals(this.name, v1ActorSystemSpecPersistentActors.name);
+    V1ActorSystemSpecRuntime v1ActorSystemSpecRuntime = (V1ActorSystemSpecRuntime) o;
+    return Objects.equals(this.image, v1ActorSystemSpecRuntime.image) &&
+        Objects.equals(this.version, v1ActorSystemSpecRuntime.version);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name);
+    return Objects.hash(image, version);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1ActorSystemSpecPersistentActors {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("class V1ActorSystemSpecRuntime {\n");
+    sb.append("    image: ").append(toIndentedString(image)).append("\n");
+    sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("}");
     return sb.toString();
   }

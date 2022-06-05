@@ -21,7 +21,6 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.kubernetes.client.openapi.models.V1ListMeta;
-import io.micronaut.core.annotation.ReflectiveAccess;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
@@ -33,7 +32,7 @@ import org.elasticsoftware.elasticactors.cloudnative.operator.models.V1ActorSyst
  * ActorSystemList is a list of ActorSystem
  */
 @ApiModel(description = "ActorSystemList is a list of ActorSystem")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-01T21:12:02.215Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-06-05T13:31:51.618Z[Etc/UTC]")
 public class V1ActorSystemList implements io.kubernetes.client.common.KubernetesListObject {
   public static final String SERIALIZED_NAME_API_VERSION = "apiVersion";
   @SerializedName(SERIALIZED_NAME_API_VERSION)
@@ -51,7 +50,8 @@ public class V1ActorSystemList implements io.kubernetes.client.common.Kubernetes
   @SerializedName(SERIALIZED_NAME_METADATA)
   private V1ListMeta metadata = null;
 
-    public V1ActorSystemList apiVersion(String apiVersion) {
+
+  public V1ActorSystemList apiVersion(String apiVersion) {
     
     this.apiVersion = apiVersion;
     return this;

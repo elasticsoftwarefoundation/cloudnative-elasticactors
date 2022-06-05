@@ -22,6 +22,15 @@ spec:
               properties:
                 shards:
                   type: integer
+                runtime:
+                  type: object
+                  properties:
+                    image:
+                      type: string
+                    version:
+                      type: string
+                  required:
+                    - version
                 persistentActors:
                   type: array
                   items:
@@ -41,6 +50,9 @@ spec:
                   properties:
                     type:
                       type: string
+              required:
+                - shards
+                - runtime
   # either Namespaced or Cluster
   scope: Namespaced
   names:
