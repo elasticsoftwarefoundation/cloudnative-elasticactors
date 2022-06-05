@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Requires(env = "actorsystemshard")
-@Informer(apiType = V1Service.class, apiListType = V1ServiceList.class, labelSelector = "io.elasticactors.actorsystem", resyncCheckPeriod = 10000L)
+@Informer(apiType = V1Service.class, apiListType = V1ServiceList.class, labelSelectorSupplier = ActorSystemLabelSelectorSupplier.class, resyncCheckPeriod = 10000L)
 public class ServiceResourceEventHandler implements ResourceEventHandler<V1Service> {
     private static final Logger log = LoggerFactory.getLogger(ServiceResourceEventHandler.class);
     @Override

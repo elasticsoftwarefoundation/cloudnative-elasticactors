@@ -30,4 +30,4 @@ jobs:
           TESTCONTAINERS_RYUK_DISABLED: true
         run: |
           BASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
-          ./mvnw deploy -Poperator -Dpackaging=docker -Djib.to.tags=${BASE_VERSION}.${{ github.run_number }},${BASE_VERSION} --no-transfer-progress
+          ./mvnw deploy -Dpackaging=docker -Djib.to.tags=${BASE_VERSION}.${{ github.run_number }},${BASE_VERSION} --no-transfer-progress

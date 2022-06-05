@@ -1,5 +1,6 @@
 package org.elasticsoftware.elasticactors.cloudnative.operator;
 
+import io.kubernetes.client.custom.Quantity;
 import io.kubernetes.client.extended.controller.reconciler.Request;
 import io.kubernetes.client.extended.controller.reconciler.Result;
 import io.kubernetes.client.informer.SharedIndexInformer;
@@ -90,8 +91,16 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
                             .withNewSpec()
                             .withContainers()
                             .addNewContainer()
-                            .withName("www")
-                            .withImage("nginx")
+                            .withName("actorsystemshard")
+                            .withImage("elasticactors/cloudnative-elasticactors:0.1")
+                            .addNewArg("actorsystemshard")
+                            .addNewArg("-Dkafka.enabled=true")
+                            .addNewArg("-Dkafka.bootstrap.servers=akces-kafka-bootstrap.strimzi:9092")
+                            .withNewResources()
+                            .addToRequests("cpu", Quantity.fromString("100m"))
+                            .addToRequests("memory",Quantity.fromString("512Mi"))
+                            .addToLimits("memory",Quantity.fromString("512Mi"))
+                            .endResources()
                             .endContainer()
                             .endSpec()
                             .endTemplate()

@@ -4,7 +4,7 @@ metadata:
   name: test-actorsystem
   namespace: default
 spec:
-  shards: 8
+  shards: 1
   persistentActors:
     - name: TestActor
   serviceActors:
