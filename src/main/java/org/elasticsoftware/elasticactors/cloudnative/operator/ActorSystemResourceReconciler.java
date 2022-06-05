@@ -164,6 +164,7 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
                             .addNewArg("actorsystemshard")
                             .addNewArg("-Dkafka.enabled="+kafkaBootstrapServiceDetector.isEnabled())
                             .addNewArg("-Dkafka.bootstrap.servers="+kafkaBootstrapServiceDetector.getBootstrapUrl())
+                            .addNewArg("-Dactorsystem.name="+actorSystem.getMetadata().getName())
                             .withNewResources()
                             .addToRequests("cpu", Quantity.fromString("100m"))
                             .addToRequests("memory",Quantity.fromString("512Mi"))

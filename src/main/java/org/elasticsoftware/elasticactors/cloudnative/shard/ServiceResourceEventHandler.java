@@ -24,7 +24,10 @@ public class ServiceResourceEventHandler implements ResourceEventHandler<V1Servi
         log.info("Found service: "+service.getMetadata().getName());
         // TODO: get the grpc address from the service
         // service.getSpec().getPorts().stream().filter(port -> port.getName().equals("grpc")).findFirst()
-        Channel channel = ManagedChannelBuilder.forAddress(service.getMetadata().getName(), 50051).build();
+        Channel channel =
+                ManagedChannelBuilder.forAddress(service.getMetadata().getName(), 50051)
+                        .usePlaintext()// TODO: need to enable ssl on the serverside
+                        .build();
         EchoResponse response = PersistentActorServiceGrpc.newBlockingStub(channel).echo(EchoRequest.newBuilder().setMessage("Test").build());
         log.error("Got EchoResponse from pod: "+response.getFrom());
     }
