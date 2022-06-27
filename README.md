@@ -1,3 +1,7 @@
+## Run locally
+
+mvn mn:run -Dmn.appArgs=operator
+
 ## Micronaut 3.5.0 Documentation
 
 - [User Guide](https://docs.micronaut.io/3.5.0/guide/index.html)
