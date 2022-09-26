@@ -161,10 +161,11 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
                             .addNewContainer()
                             .withName("actorsystemshard")
                             .withImage(Optional.ofNullable(actorSystem.getSpec().getRuntime().getImage()).orElse("elasticactors/cloudnative-elasticactors")+":"+actorSystem.getSpec().getRuntime().getVersion())
-                            .addNewArg("actorsystemshard")
-                            .addNewArg("-Dkafka.enabled="+kafkaBootstrapServiceDetector.isEnabled())
-                            .addNewArg("-Dkafka.bootstrap.servers="+kafkaBootstrapServiceDetector.getBootstrapUrl())
-                            .addNewArg("-Dactorsystem.name="+actorSystem.getMetadata().getName())
+                            .addToArgs(
+                                    "actorsystemshard",
+                                    "-Dkafka.enabled="+kafkaBootstrapServiceDetector.isEnabled(),
+                                    "-Dkafka.bootstrap.servers="+kafkaBootstrapServiceDetector.getBootstrapUrl(),
+                                    "-Dactorsystem.name="+actorSystem.getMetadata().getName())
                             .withNewResources()
                             .addToRequests("cpu", Quantity.fromString("100m"))
                             .addToRequests("memory",Quantity.fromString("512Mi"))
@@ -178,11 +179,11 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
 
             try {
                 // create shards
-                this.coreApi.createNamespacedServiceAccount(actorSystem.getMetadata().getNamespace(), serviceAccount, null, null, null);
-                this.rbacAuthorizationApi.createNamespacedRole(actorSystem.getMetadata().getNamespace(), role, null, null, null);
-                this.rbacAuthorizationApi.createNamespacedRoleBinding(actorSystem.getMetadata().getNamespace(), roleBinding, null, null, null);
-                this.coreApi.createNamespacedService(actorSystem.getMetadata().getNamespace(), service, null, null, null);
-                this.appsApi.createNamespacedStatefulSet(actorSystem.getMetadata().getNamespace(), statefulSet, null, null, null);
+                this.coreApi.createNamespacedServiceAccount(actorSystem.getMetadata().getNamespace(), serviceAccount, null, null, null, null);
+                this.rbacAuthorizationApi.createNamespacedRole(actorSystem.getMetadata().getNamespace(), role, null, null, null, null);
+                this.rbacAuthorizationApi.createNamespacedRoleBinding(actorSystem.getMetadata().getNamespace(), roleBinding, null, null, null, null);
+                this.coreApi.createNamespacedService(actorSystem.getMetadata().getNamespace(), service, null, null, null, null);
+                this.appsApi.createNamespacedStatefulSet(actorSystem.getMetadata().getNamespace(), statefulSet, null, null, null, null);
                 // create persistent actors
                 for (V1ActorSystemSpecPersistentActors persistentActor : actorSystem.getSpec().getPersistentActors()) {
                     createPersistentActor(actorSystem, persistentActor);
@@ -219,6 +220,7 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
                         .withPort(50051)
                         .withProtocol("TCP")
                         .endPort()
+                        .withInternalTrafficPolicy("Local")
                         .endSpec().build();
 
         V1DaemonSet daemonSet =
@@ -253,7 +255,7 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
                         .addNewContainer()
                         .withName("persistentactor")
                         .withImage(Optional.ofNullable(actorSystem.getSpec().getRuntime().getImage()).orElse("elasticactors/cloudnative-elasticactors")+":"+actorSystem.getSpec().getRuntime().getVersion())
-                        .addNewArg("persistentactor")
+                        .addToArgs("persistentactor")
                         .withNewResources()
                         .addToRequests("cpu", Quantity.fromString("100m"))
                         .addToRequests("memory",Quantity.fromString("256Mi"))
@@ -269,7 +271,7 @@ public class ActorSystemResourceReconciler implements ResourceReconciler<V1Actor
                         .endTemplate()
                         .endSpec().build();
 
-        this.appsApi.createNamespacedDaemonSet(actorSystem.getMetadata().getNamespace(), daemonSet, null, null, null);
-        this.coreApi.createNamespacedService(actorSystem.getMetadata().getNamespace(), service, null, null, null);
+        this.appsApi.createNamespacedDaemonSet(actorSystem.getMetadata().getNamespace(), daemonSet, null, null, null, null);
+        this.coreApi.createNamespacedService(actorSystem.getMetadata().getNamespace(), service, null, null, null, null);
     }
 }

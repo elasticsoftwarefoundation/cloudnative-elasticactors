@@ -106,11 +106,35 @@
       <groupId>io.micronaut.kubernetes</groupId>
       <artifactId>micronaut-kubernetes-client</artifactId>
       <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>io.kubernetes</groupId>
+          <artifactId>client-java</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.micronaut.kubernetes</groupId>
       <artifactId>micronaut-kubernetes-operator</artifactId>
       <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>io.kubernetes</groupId>
+          <artifactId>client-java-extended</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.kubernetes</groupId>
+      <artifactId>client-java</artifactId>
+      <scope>compile</scope>
+      <version>16.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.kubernetes</groupId>
+      <artifactId>client-java-extended</artifactId>
+      <scope>compile</scope>
+      <version>16.0.0</version>
     </dependency>
     <dependency>
       <groupId>io.micronaut.kubernetes</groupId>

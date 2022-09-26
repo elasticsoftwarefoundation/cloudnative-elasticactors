@@ -6,7 +6,7 @@ metadata:
 spec:
   shards: 5
   runtime:
-    version: 0.1.19
+    version: 0.2.20
   persistentActors:
     - name: TestActor
   serviceActors:
